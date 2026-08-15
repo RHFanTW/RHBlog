@@ -8,79 +8,282 @@ import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, category, tags } = Astro.props;
 ---
 
-<html lang="en">
+<!doctype html>
+<html lang="zh-Hant">
 	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
+		<BaseHead title={title} description={description || title} image={heroImage} type="article" />
 	</head>
-
 	<body>
 		<Header />
 		<main>
 			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
+				<header class="article-header container">
+					<a class="back-link" href="/blog"><span aria-hidden="true">←</span> 回到文章列表</a>
+					<div class="article-meta">
+						<span>{category ?? 'NOTE'}</span>
+						<FormattedDate date={pubDate} />
 					</div>
-					<slot />
+					<h1>{title}</h1>
+					{description && <p class="article-description">{description}</p>}
+					{
+						tags && tags.length > 0 && (
+							<ul class="article-tags" aria-label="文章標籤">
+								{tags.map((tag) => <li>{tag}</li>)}
+							</ul>
+						)
+					}
+					{
+						updatedDate && (
+							<p class="updated-date">
+								最後更新：<FormattedDate date={updatedDate} />
+							</p>
+						)
+					}
+				</header>
+
+				{
+					heroImage && (
+						<div class="hero-image container">
+							<Image width={1180} height={620} src={heroImage} alt={title} />
+						</div>
+					)
+				}
+
+				<div class="article-shell container">
+					<aside class="article-aside" aria-label="文章資訊">
+						<span>RH JOURNAL</span>
+						<div class="aside-line"></div>
+						<span>READING NOTE</span>
+					</aside>
+					<div class="prose">
+						<slot />
+					</div>
 				</div>
+
+				<footer class="article-footer container">
+					<p>讀完了嗎？回到文章列表，繼續探索其他筆記。</p>
+					<a href="/blog">更多文章 <span aria-hidden="true">→</span></a>
+				</footer>
 			</article>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	.article-header {
+		max-width: 980px;
+		padding-top: clamp(4.5rem, 9vw, 8rem);
+		padding-bottom: clamp(3.5rem, 7vw, 6rem);
+	}
+
+	.back-link {
+		display: inline-flex;
+		gap: 0.55rem;
+		margin-bottom: 4rem;
+		color: var(--muted);
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.05em;
+		text-decoration: none;
+	}
+
+	.article-meta {
+		display: flex;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+		color: var(--accent-dark);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+
+	.article-meta span:first-child::after {
+		margin-left: 1rem;
+		color: var(--line-dark);
+		content: "/";
+	}
+
+	.article-header h1 {
+		max-width: 900px;
+		font-size: clamp(3rem, 7vw, 6rem);
+		line-height: 1.08;
+	}
+
+	.article-description {
+		max-width: 680px;
+		margin: 1.75rem 0 0;
+		color: var(--muted);
+		font-size: 1.1rem;
+	}
+
+	.article-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin: 2rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.article-tags li {
+		padding: 0.22rem 0.6rem;
+		border: 1px solid var(--line-dark);
+		color: var(--muted);
+		font-size: 0.68rem;
+		line-height: 1.5;
+	}
+
+	.updated-date {
+		margin: 1.5rem 0 0;
+		color: var(--muted);
+		font-size: 0.72rem;
+	}
+
+	.hero-image {
+		margin-bottom: clamp(4rem, 8vw, 7rem);
+	}
+
+	.hero-image img {
+		width: 100%;
+		border: 1px solid var(--line);
+		box-shadow: var(--shadow);
+		object-fit: cover;
+	}
+
+	.article-shell {
+		display: grid;
+		grid-template-columns: 170px minmax(0, var(--content)) 1fr;
+		gap: 3rem;
+		padding-block: clamp(4rem, 8vw, 7rem);
+		border-top: 1px solid var(--line-dark);
+	}
+
+	.article-aside {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		padding-top: 0.55rem;
+		color: var(--muted);
+		font-size: 0.62rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+	}
+
+	.aside-line {
+		width: 100%;
+		height: 1px;
+		background: var(--line);
+	}
+
+	.prose {
+		grid-column: 2;
+		min-width: 0;
+		color: var(--ink-soft);
+	}
+
+	.prose :global(> :first-child) {
+		margin-top: 0;
+	}
+
+	.prose :global(p) {
+		margin: 0 0 1.7em;
+	}
+
+	.prose :global(h1),
+	.prose :global(h2) {
+		margin: 3.5rem 0 1.25rem;
+		font-size: clamp(1.8rem, 4vw, 2.65rem);
+	}
+
+	.prose :global(h3) {
+		margin: 2.75rem 0 1rem;
+		font-size: 1.55rem;
+	}
+
+	.prose :global(h4),
+	.prose :global(h5),
+	.prose :global(h6) {
+		margin: 2.25rem 0 0.8rem;
+	}
+
+	.prose :global(ul),
+	.prose :global(ol) {
+		margin: 0 0 1.8rem;
+		padding-left: 1.5rem;
+	}
+
+	.prose :global(li) {
+		margin-bottom: 0.45rem;
+		padding-left: 0.3rem;
+	}
+
+	.prose :global(a) {
+		color: var(--accent-dark);
+	}
+
+	.prose :global(img) {
+		margin: 2.5rem 0;
+		border: 1px solid var(--line);
+	}
+
+	.article-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 2rem;
+		margin-bottom: clamp(5rem, 10vw, 9rem);
+		padding: 2rem 0;
+		border-top: 1px solid var(--line);
+		border-bottom: 1px solid var(--line);
+	}
+
+	.article-footer p {
+		margin: 0;
+		color: var(--muted);
+		font-size: 0.88rem;
+	}
+
+	.article-footer a {
+		flex: 0 0 auto;
+		font-size: 0.78rem;
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	@media (max-width: 900px) {
+		.article-shell {
+			grid-template-columns: 1fr;
+		}
+
+		.article-aside {
+			flex-direction: row;
+			align-items: center;
+		}
+
+		.aside-line {
+			flex: 1;
+		}
+
+		.prose {
+			grid-column: 1;
+			max-width: var(--content);
+			margin-inline: auto;
+		}
+	}
+
+	@media (max-width: 580px) {
+		.back-link {
+			margin-bottom: 3rem;
+		}
+
+		.article-footer {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+	}
+</style>
