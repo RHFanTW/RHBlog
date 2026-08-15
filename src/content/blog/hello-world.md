@@ -9,7 +9,7 @@ tags:
 draft: false
 ---
 
-# Hello World
+# Hello World - Auto Deploy OK
 
 這是我的第一篇 Astro 文章。
 
