@@ -2,6 +2,8 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import profilePortrait from '../assets/rh-profile.png';
+import { Image } from 'astro:assets';
 import { SITE_TITLE } from '../consts';
 ---
 
@@ -25,10 +27,20 @@ import { SITE_TITLE } from '../consts';
 			</header>
 
 			<section class="about-body container">
-				<div class="about-label">
-					<span>RH Journal</span>
-					<span>Est. 2026</span>
-				</div>
+				<aside class="about-profile">
+					<div class="about-label">
+						<span>RH Journal</span>
+						<span>Est. 2026</span>
+					</div>
+					<figure class="profile-portrait">
+						<Image
+							src={profilePortrait}
+							alt="RH Journal 作者個人照"
+							width={440}
+							quality="mid"
+						/>
+					</figure>
+				</aside>
 				<div class="about-copy">
 					<p class="lead">
 						RH Journal 是一個用來整理思考與實作筆記的個人網站。這裡不只記錄結果，也保留過程中的判斷、取捨與修正。
@@ -105,6 +117,22 @@ import { SITE_TITLE } from '../consts';
 		font-weight: 700;
 		letter-spacing: 0.12em;
 		text-transform: uppercase;
+	}
+
+	.profile-portrait {
+		aspect-ratio: 4 / 5;
+		margin: 2.5rem 0 0;
+		overflow: hidden;
+		border: 1px solid var(--line-dark);
+		background: var(--surface);
+		box-shadow: var(--shadow);
+	}
+
+	.profile-portrait :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: 28% center;
 	}
 
 	.about-copy > p {
@@ -191,6 +219,24 @@ import { SITE_TITLE } from '../consts';
 			flex-direction: row;
 			justify-content: space-between;
 		}
+
+		.about-profile {
+			display: grid;
+			grid-template-columns: minmax(160px, 220px) minmax(0, 1fr);
+			align-items: end;
+			gap: 2rem;
+		}
+
+		.profile-portrait {
+			grid-column: 1;
+			grid-row: 1;
+			margin: 0;
+		}
+
+		.about-label {
+			grid-column: 2;
+			grid-row: 1;
+		}
 	}
 
 	@media (max-width: 650px) {
@@ -210,6 +256,16 @@ import { SITE_TITLE } from '../consts';
 			align-items: flex-start;
 			flex-direction: column;
 			gap: 1.25rem;
+		}
+
+		.about-profile {
+			grid-template-columns: minmax(135px, 42vw) minmax(0, 1fr);
+			gap: 1.25rem;
+		}
+
+		.about-label {
+			flex-direction: column;
+			justify-content: flex-end;
 		}
 	}
 </style>
