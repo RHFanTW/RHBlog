@@ -15,3 +15,6 @@ draft: false
 
 未來這個 Markdown 將由 SiYuan Publisher 自動建立。
 
+## Cloudflare 自動部署測試
+
+2026-08-15：這一行是 GitHub Push 自動部署測試。
