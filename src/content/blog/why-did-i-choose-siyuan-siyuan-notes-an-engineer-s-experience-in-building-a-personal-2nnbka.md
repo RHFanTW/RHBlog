@@ -395,3 +395,9 @@ SiYuan 真正的價值，需要在資料累積之後才會慢慢出現。
 **我不是在找一套可以取代紙本筆記的軟體。**
 
 **我是在建立自己的第二大腦。**
+
+---
+
+SiYuan(思源筆記) 官網: https://b3log.org/siyuan/
+
+SiYuan(思源筆記) GitHub: https://github.com/siyuan-note/siyuan
