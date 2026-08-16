@@ -182,6 +182,7 @@ const { title, description, pubDate, updatedDate, heroImage, category, tags } = 
 
 	.prose {
 		grid-column: 2;
+		width: 100%;
 		min-width: 0;
 		color: var(--ink-soft);
 	}
@@ -224,11 +225,27 @@ const { title, description, pubDate, updatedDate, heroImage, category, tags } = 
 
 	.prose :global(a) {
 		color: var(--accent-dark);
+		overflow-wrap: anywhere;
 	}
 
 	.prose :global(img) {
 		margin: 2.5rem 0;
 		border: 1px solid var(--line);
+	}
+
+	.prose :global(pre),
+	.prose :global(table) {
+		max-width: 100%;
+	}
+
+	.prose :global(table) {
+		display: block;
+		overflow-x: auto;
+	}
+
+	.prose :global(iframe),
+	.prose :global(video) {
+		max-width: 100%;
 	}
 
 	.article-footer {
