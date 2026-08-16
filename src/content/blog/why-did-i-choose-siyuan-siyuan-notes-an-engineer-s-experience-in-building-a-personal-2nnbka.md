@@ -8,6 +8,12 @@ pubDate: '2026-08-16'
 
 # 為什麼我選擇 SiYuan(思源筆記)？一個工程師打造個人知識庫的使用經驗
 
+SiYuan(思源筆記) 官網: https://b3log.org/siyuan/
+
+SiYuan(思源筆記) GitHub: https://github.com/siyuan-note/siyuan
+
+---
+
 做了二十年的軟體開發之後，我慢慢發現一件事情：
 
 **工程師真正重要的資產，可能不是寫過多少程式，而是這些年累積下來的知識。**
@@ -396,8 +402,3 @@ SiYuan 真正的價值，需要在資料累積之後才會慢慢出現。
 
 **我是在建立自己的第二大腦。**
 
----
-
-SiYuan(思源筆記) 官網: https://b3log.org/siyuan/
-
-SiYuan(思源筆記) GitHub: https://github.com/siyuan-note/siyuan
