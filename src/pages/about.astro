@@ -40,7 +40,9 @@ import { SITE_TITLE } from '../consts';
 							quality="mid"
 						/>
 					</figure>
-					<a class="profile-email" href="mailto:rhfan.tw@gmail.com">rhfan.tw@gmail.com</a>
+					<p class="profile-caption">
+						RHFan 范潤華, mailto: <a href="mailto:rhfan.tw@gmail.com">rhfan.tw@gmail.com</a>
+					</p>
 				</aside>
 				<div class="about-copy">
 					<p class="lead">
@@ -136,14 +138,18 @@ import { SITE_TITLE } from '../consts';
 		object-position: 28% center;
 	}
 
-	.profile-email {
-		display: inline-block;
-		margin-top: 1rem;
+	.profile-caption {
+		width: 100%;
+		margin: 1rem 0 0;
 		color: var(--muted);
-		font-size: 0.78rem;
+		font-size: 0.67rem;
+		letter-spacing: -0.02em;
 		line-height: 1.5;
+		overflow-wrap: anywhere;
+	}
+
+	.profile-caption a {
 		text-decoration-color: var(--accent);
-		word-break: break-all;
 	}
 
 	.about-copy > p {
@@ -249,7 +255,7 @@ import { SITE_TITLE } from '../consts';
 			grid-row: 1;
 		}
 
-		.profile-email {
+		.profile-caption {
 			grid-column: 1;
 			grid-row: 2;
 			margin-top: -1rem;
